@@ -3,6 +3,7 @@ package com.example.speechrecognizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
@@ -10,11 +11,22 @@ import java.util.Date
 
 class Adapter(var records: ArrayList<AudioRecord>, var listener: OnItemClickListener) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
+    private var editMode = false
+    fun isEditMode(): Boolean{return editMode}
+
+    fun setEditMode(mode: Boolean){
+        if(editMode != mode){
+            editMode = mode
+            notifyDataSetChanged()
+        }
+
+    }
+
 
     inner class ViewHolder(itemView : View): RecyclerView.ViewHolder(itemView),View.OnClickListener,View.OnLongClickListener{
         var tvFilename : TextView = itemView.findViewById(R.id.tvFilename)
         var tvMeta : TextView = itemView.findViewById(R.id.tvMeta)
-        var checkbox : TextView = itemView.findViewById(R.id.checkbox)
+        var checkbox : CheckBox = itemView.findViewById(R.id.checkbox)
 
         init {
             itemView.setOnClickListener(this)
@@ -52,9 +64,16 @@ class Adapter(var records: ArrayList<AudioRecord>, var listener: OnItemClickList
             var sdfDate = sdf.format(date)
 
 
-
             holder.tvFilename.text = record.filename
             holder.tvMeta.text = "${record.duration} $sdfDate"
+
+            if(editMode){
+                holder.checkbox.visibility = View.VISIBLE
+                holder.checkbox.isChecked =record.isChecked
+            }else{
+                holder.checkbox.visibility = View.GONE
+                holder.checkbox.isChecked =false
+            }
         }
     }
 }

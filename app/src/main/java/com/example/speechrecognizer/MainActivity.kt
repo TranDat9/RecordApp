@@ -136,7 +136,6 @@ binding.btnRecord.setOnClickListener {
 
         binding.btnDelete.setOnClickListener {
             stopRecorder()
-
             Toast.makeText(this,"Record deleted",Toast.LENGTH_SHORT).show()
         }
 
@@ -156,7 +155,7 @@ binding.btnRecord.setOnClickListener {
 
 
        // Mở một FileOutputStream để ghi dữ liệu vào tệp có đường dẫn ampsPath.
-        //Sử dụng ObjectOutputStream để ghi đối tượng amplitudes vào tệ
+        //Sử dụng ObjectOutputStream để ghi đối tượng amplitudes vào tệp
         try {
             var fos = FileOutputStream(ampsPath)
             var out = ObjectOutputStream(fos)
